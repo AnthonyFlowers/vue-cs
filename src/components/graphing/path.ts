@@ -2,7 +2,7 @@ import { Edge } from "./edge";
 import { Vertex } from "./graph";
 
 export class Path {
-  constructor(private edges: Edge[], public length: number = 0) {
+  constructor(private edges: Edge[] = [], public length: number = 0) {
     this.edges = edges;
     this.length = edges.length
       ? edges.reduce((sum, e) => sum + e.distance, 0)
@@ -10,10 +10,12 @@ export class Path {
   }
   public addEdge(edge: Edge) {
     this.edges.push(edge);
-    length += edge.distance;
+    this.length += edge.distance;
   }
   public contains(edge: Edge) {
-    return this.edges.includes(edge);
+    return this.edges.find((e) => {
+      return e.equals(edge);
+    });
   }
   public getEdges() {
     return this.edges;

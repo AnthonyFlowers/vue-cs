@@ -46,13 +46,9 @@ export class Dijkstra extends Graph {
   private findPossibleEdges(vertexId: number, path: Edge[]): Edge[] {
     return this.edges
       .filter((edge) => {
-        if (path.includes(edge)) {
-          return false;
-        } else {
-          return path.includes(edge)
-            ? false
-            : edge.vertexOne.id === vertexId || edge.vertexTwo.id === vertexId;
-        }
+        return path.includes(edge)
+          ? false
+          : edge.vertexOne.id === vertexId || edge.vertexTwo.id === vertexId;
       })
       .sort((e1, e2) => e2.distance - e1.distance);
   }

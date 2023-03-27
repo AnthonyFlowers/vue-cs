@@ -3,21 +3,9 @@ import { Vertex } from "../../components/graphing/graph";
 import { Path } from "../../components/graphing/path";
 
 const testVerticies = {
-  v1: {
-    id: 0,
-    position: { x: 5, y: 5 },
-    distance: Number.MAX_SAFE_INTEGER,
-  },
-  v2: {
-    id: 1,
-    position: { x: 10, y: 10 },
-    distance: Number.MAX_SAFE_INTEGER,
-  },
-  v3: {
-    id: 2,
-    position: { x: 20, y: 20 },
-    distance: Number.MAX_SAFE_INTEGER,
-  },
+  v1: new Vertex(0, { x: 5, y: 5 }),
+  v2: new Vertex(1, { x: 10, y: 10 }),
+  v3: new Vertex(2, { x: 20, y: 20 }),
 };
 
 const testEdges = {

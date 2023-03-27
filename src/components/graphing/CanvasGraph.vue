@@ -89,7 +89,7 @@ export default defineComponent({
         this.selectedPoint = foundPoint;
         (<HTMLInputElement>this.$refs.edgeLengthInput).select();
       } else {
-        this.graph.addvertex(position);
+        this.graph.addVertex(position);
         this.selectedPoint = null;
       }
       this.redraw(ctx);

@@ -56,14 +56,14 @@ describe("Edge test suite", () => {
     const edge = new Edge(testVerticies.v1, testVerticies.v2, 1);
     const expectedVertex = testVerticies.v1;
 
-    expect(edge.other(testVerticies.v2)).toEqual(expectedVertex);
+    expect(edge.other(testVerticies.v2.id)).toEqual(expectedVertex);
   });
 
   test("should get other vertex side two", () => {
     const edge = new Edge(testVerticies.v2, testVerticies.v1, 1);
     const expectedVertex = testVerticies.v1;
 
-    expect(edge.other(testVerticies.v2)).toEqual(expectedVertex);
+    expect(edge.other(testVerticies.v2.id)).toEqual(expectedVertex);
   });
 
   test("should equal", () => {

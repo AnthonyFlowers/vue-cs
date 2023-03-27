@@ -30,7 +30,7 @@ describe("Graph test suite", () => {
     const graph = new TestGraph();
     const expectedVertexCount = 1;
 
-    graph.addvertex({ x: 5, y: 5 });
+    graph.addVertex({ x: 5, y: 5 });
 
     expect(graph.getVerticies().length).toBe(expectedVertexCount);
   });
@@ -39,7 +39,7 @@ describe("Graph test suite", () => {
     const graph = new TestGraph();
     const expectedVertexCount = 1;
 
-    graph.addvertex({ x: 5, y: 5 });
+    graph.addVertex({ x: 5, y: 5 });
 
     expect(graph.pointExists({ x: 5, y: 5 })).toBeTruthy();
     expect(graph.pointExists({ x: 4, y: 4 })).toBeTruthy();
@@ -51,7 +51,7 @@ describe("Graph test suite", () => {
     const graph = new TestGraph();
     const expectedVertexCount = 1;
 
-    graph.addvertex({ x: 70, y: 70 });
+    graph.addVertex({ x: 70, y: 70 });
 
     expect(graph.pointExists({ x: 140, y: 140 })).toBeFalsy();
     expect(graph.pointExists({ x: 0, y: 0 })).toBeFalsy();
@@ -60,8 +60,8 @@ describe("Graph test suite", () => {
 
   test("should add edge to graph", () => {
     const graph = new TestGraph();
-    graph.addvertex({ x: 1, y: 1 });
-    graph.addvertex({ x: 3, y: 3 });
+    graph.addVertex({ x: 1, y: 1 });
+    graph.addVertex({ x: 3, y: 3 });
 
     const expected = {
       vertexOne: {
@@ -84,8 +84,8 @@ describe("Graph test suite", () => {
 
   test("should find edge on graph", () => {
     const graph = new TestGraph();
-    graph.addvertex({ x: 1, y: 1 });
-    graph.addvertex({ x: 3, y: 3 });
+    graph.addVertex({ x: 1, y: 1 });
+    graph.addVertex({ x: 3, y: 3 });
 
     const expected = {
       vertexOne: {
@@ -110,9 +110,9 @@ describe("Graph test suite", () => {
 
   test("should not find edge on graph", () => {
     const graph = new TestGraph();
-    graph.addvertex({ x: 1, y: 1 });
-    graph.addvertex({ x: 3, y: 3 });
-    graph.addvertex({ x: 5, y: 5 });
+    graph.addVertex({ x: 1, y: 1 });
+    graph.addVertex({ x: 3, y: 3 });
+    graph.addVertex({ x: 5, y: 5 });
 
     const expected = {
       vertexOne: {

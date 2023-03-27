@@ -3,7 +3,7 @@ import { Dijkstra } from "../../components/graphing/dijkstra";
 describe("Dijkstra algorithm test suite", () => {
   test("should find path to self", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
+    const vertexJ = graph.addVertex({ x: 1, y: 1 });
     graph.addEdge(vertexJ.id, vertexJ.id, 0);
 
     const result = graph.findPath(vertexJ.id, vertexJ.id);
@@ -13,8 +13,9 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should find path 1 edge away", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
+    const { vertexJ, vertexK } = testVerticies;
+    graph.addVertex(vertexJ.position);
+    graph.addVertex(vertexK.position);
     const edge = graph.addEdge(vertexJ.id, vertexK.id, 5);
 
     const result = graph.findPath(vertexJ.id, vertexK.id);
@@ -25,9 +26,8 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should find path 2 edges away", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
+    const { vertexJ, vertexK, vertexL } = testVerticies;
+    [vertexJ, vertexK, vertexL].forEach((v) => graph.addVertex(v.position));
     const edgeJ = graph.addEdge(vertexJ.id, vertexK.id, 5);
     const edgeK = graph.addEdge(vertexK.id, vertexL.id, 5);
 
@@ -40,10 +40,11 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should find path 3 edges away", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
-    const vertexM = graph.addvertex({ x: 7, y: 7 });
+    const { vertexJ, vertexK, vertexL, vertexM } = testVerticies;
+    [vertexJ, vertexK, vertexL, vertexM].forEach((v) =>
+      graph.addVertex(v.position)
+    );
+
     const edgeJ = graph.addEdge(vertexJ.id, vertexK.id, 5);
     const edgeK = graph.addEdge(vertexK.id, vertexL.id, 5);
     const edgeL = graph.addEdge(vertexL.id, vertexM.id, 5);
@@ -58,10 +59,10 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should find shorter path 1 edge away", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
-    const vertexM = graph.addvertex({ x: 7, y: 7 });
+    const { vertexJ, vertexK, vertexL, vertexM } = testVerticies;
+    [vertexJ, vertexK, vertexL, vertexM].forEach((v) =>
+      graph.addVertex(v.position)
+    );
     graph.addEdge(vertexJ.id, vertexK.id, 5);
     graph.addEdge(vertexK.id, vertexL.id, 5);
     graph.addEdge(vertexL.id, vertexM.id, 5);
@@ -75,10 +76,10 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should find path 1 edge away multiple options", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
-    const vertexM = graph.addvertex({ x: 7, y: 7 });
+    const { vertexJ, vertexK, vertexL, vertexM } = testVerticies;
+    [vertexJ, vertexK, vertexL, vertexM].forEach((v) =>
+      graph.addVertex(v.position)
+    );
     graph.addEdge(vertexJ.id, vertexK.id, 5);
     graph.addEdge(vertexJ.id, vertexL.id, 4);
     graph.addEdge(vertexJ.id, vertexM.id, 1);
@@ -90,23 +91,25 @@ describe("Dijkstra algorithm test suite", () => {
 
   test("should not find path", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
+    const { vertexJ, vertexK, vertexL } = testVerticies;
+    [vertexJ, vertexK, vertexL].forEach((v) => graph.addVertex(v.position));
+
     graph.addEdge(vertexJ.id, vertexK.id, 5);
     const path = graph.findPath(vertexJ.id, vertexL.id);
+
     expect(path.length).toEqual(0);
     expect(path.getEdges()).toEqual([]);
   });
 
   test("edge removed should not find path", () => {
     const graph = new Dijkstra();
-    const vertexJ = graph.addvertex({ x: 1, y: 1 });
-    const vertexK = graph.addvertex({ x: 3, y: 3 });
-    const vertexL = graph.addvertex({ x: 5, y: 5 });
+    const { vertexJ, vertexK, vertexL } = testVerticies;
+    [vertexJ, vertexK, vertexL].forEach((v) => graph.addVertex(v.position));
+
     const edge = graph.addEdge(vertexJ.id, vertexK.id, 5);
     graph.removeEdge(edge);
     const path = graph.findPath(vertexJ.id, vertexK.id);
+
     expect(path.length).toEqual(0);
     expect(path.getEdges()).toEqual([]);
   });
@@ -120,3 +123,10 @@ describe("Dijkstra algorithm test suite", () => {
 });
 
 export {};
+
+const testVerticies = {
+  vertexJ: { id: 0, position: { x: 1, y: 1 } },
+  vertexK: { id: 1, position: { x: 3, y: 3 } },
+  vertexL: { id: 2, position: { x: 5, y: 5 } },
+  vertexM: { id: 3, position: { x: 7, y: 7 } },
+};

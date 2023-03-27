@@ -25,8 +25,8 @@ export class Edge {
     };
   }
 
-  other(vertex: Vertex) {
-    return vertex.id === this.vertexOne.id ? this.vertexTwo : this.vertexOne;
+  other(vertexId: number) {
+    return vertexId === this.vertexOne.id ? this.vertexTwo : this.vertexOne;
   }
 
   equals(o: Edge): boolean {

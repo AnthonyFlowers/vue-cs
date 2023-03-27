@@ -7,11 +7,16 @@ export type Position = {
   y: number;
 };
 
-export type Vertex = {
-  id: number;
-  distance: number;
-  position: Position;
-};
+export class Vertex {
+  constructor(
+    readonly id: number,
+    public position: Position,
+    public distance: number = Number.MAX_SAFE_INTEGER
+  ) {}
+  public isExplored() {
+    return this.distance !== Number.MAX_SAFE_INTEGER;
+  }
+}
 
 export type Result = {
   path: Edge[];
@@ -29,15 +34,12 @@ export abstract class Graph {
     this.edges = [];
     this.minPointDistance = 60;
   }
-  abstract findPath(fromvertexId: number, tovertexId: number): Path;
-  public addvertex(position: Position): Vertex {
-    const newvertex = {
-      id: this.verticies.length,
-      distance: Number.MAX_SAFE_INTEGER,
-      position: position,
-    };
-    this.verticies.push(newvertex);
-    return newvertex;
+  abstract findPath(fromvertexId: number, tovertexId: number): Path | null;
+  public addVertex(position: Position): Vertex {
+    const newVertex = new Vertex(this.verticies.length, position);
+
+    this.verticies.push(newVertex);
+    return newVertex;
   }
   public addEdge(vertexOneId: number, vertexTwoId: number, distance: number) {
     const vertexOne = this.getvertex(vertexOneId);
@@ -95,8 +97,8 @@ export abstract class Graph {
   protected getPathBetween(vertexOne: Vertex, vertexTwo: Vertex): Edge {
     return this.edges.filter(
       (e) =>
-        (e.vertexOne == vertexOne && e.vertexTwo == vertexTwo) ||
-        (e.vertexOne == vertexTwo && e.vertexTwo == vertexOne)
+        (e.vertexOne.id == vertexOne.id && e.vertexTwo.id == vertexTwo.id) ||
+        (e.vertexOne.id == vertexTwo.id && e.vertexTwo.id == vertexOne.id)
     )[0];
   }
 }

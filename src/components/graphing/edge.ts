@@ -29,6 +29,18 @@ export class Edge {
     return vertexId === this.vertexOne.id ? this.vertexTwo : this.vertexOne;
   }
 
+  unexplored() {
+    return this.vertexOne.isExplored()
+      ? this.vertexTwo.isExplored()
+        ? null
+        : this.vertexTwo
+      : this.vertexOne;
+  }
+
+  toString() {
+    return `(${this.vertexOne.id} => ${this.vertexTwo} : ${this.distance})`;
+  }
+
   equals(o: Edge): boolean {
     return (
       (this.vertexOne.id === o.vertexOne.id &&

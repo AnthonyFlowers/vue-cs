@@ -20,6 +20,9 @@ export class Path {
   public getEdges() {
     return this.edges;
   }
+  public containsVertex(vertexId: number) {
+    return this.edges.some((e) => e.contains(vertexId));
+  }
   public clear() {
     this.edges.length = 0;
     this.length = 0;

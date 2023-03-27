@@ -16,6 +16,9 @@ export class Vertex {
   public isExplored() {
     return this.distance !== Number.MAX_SAFE_INTEGER;
   }
+  toString() {
+    return `${this.id}`;
+  }
 }
 
 export type Result = {

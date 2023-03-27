@@ -3,78 +3,75 @@ import { Graph, Result, Vertex } from "./graph";
 import { Path } from "./path";
 
 export class Prim extends Graph {
-  private nextEdges: Edge[];
-  exploreOrder: number[];
   constructor() {
     super();
-    this.nextEdges = [];
-    this.exploreOrder = [];
   }
-  public findPath(
-    fromVertexId: number,
-    toVertexId: number,
-    path: Path = new Path(),
-    exploreOrder: number[] = []
-  ): Path | null {
-    const fromVertex = this.getvertex(fromVertexId);
-    const toVertex = this.getvertex(toVertexId);
 
-    if (path.length === 0) {
-      this.clearPath();
-      fromVertex.distance = 0;
-      if (fromVertex === toVertex) {
-        this.exploreOrder = [fromVertexId];
-        return new Path([new Edge(fromVertex, toVertex, 0)]);
+  public findPath(fromVertexId: number, toVertexId: number): Path {
+    const mst = this.generateMST(fromVertexId);
+    const path = new Path();
+    const verticies: number[] = [fromVertexId, toVertexId];
+    let edge = mst.pop();
+    while (
+      (!path.containsVertex(fromVertexId) ||
+        !path.containsVertex(toVertexId)) &&
+      edge
+    ) {
+      if (
+        verticies.some((v) => {
+          if (edge?.contains(v)) {
+            verticies.push(edge.other(v).id);
+            return true;
+          }
+        })
+      ) {
+        path.addEdge(edge);
       }
+      edge = mst.pop();
     }
+    return path;
+  }
+  public generateMST(fromVertexId: number): Edge[] {
+    const mst: Edge[] = [];
+    let nextEdges: Edge[] = [];
+    let fromVertex = this.getvertex(fromVertexId);
 
     // const generatedPath = this.generateTree(fromVertex, toVertex, path);
-    if (fromVertexId === toVertexId) {
-      exploreOrder.push(toVertexId);
-      toVertex.distance = path.length;
-      this.exploreOrder = exploreOrder;
-      return path;
-    }
-    this.updateNextEdges(fromVertexId, path);
-    let edge = this.nextEdges.pop();
+    fromVertex.distance = 0;
+    nextEdges = this.updateNextEdges(fromVertexId, nextEdges, mst);
+    let edge = nextEdges.pop();
     // console.log(exploreOrder);
-    if (edge) {
+    while (edge) {
       // edge.other(toVertexId).distance = path.length;
       // path.addEdge(edge);
-      const nextVertex = edge.other(fromVertexId);
-      if (!nextVertex.isExplored() && !toVertex.isExplored()) {
+      const nextVertex = edge.unexplored();
+      if (nextVertex && !nextVertex.isExplored()) {
+        fromVertex = edge.other(nextVertex.id);
+        mst.push(edge);
         nextVertex.distance = fromVertex.distance + edge.distance;
-        exploreOrder.push(fromVertexId);
-        // if (fromVertex.id !== toVertexId) this.nextEdges.pop();
-        this.updateNextEdges(nextVertex.id, path);
-        const found = this.findPath(
-          nextVertex.id,
-          toVertexId,
-          new Path([...path.getEdges(), edge]),
-          exploreOrder
-        );
-        if (toVertex.isExplored() && found)
-          return this.findPath(toVertexId, toVertexId, found);
+        this.updateNextEdges(nextVertex.id, nextEdges, mst);
       }
-      // if (edge.other(fromVertex.id).id !== toVertexId) this.nextEdges.pop();
-      edge = this.nextEdges.pop();
+      edge = nextEdges.pop();
     }
-    console.log(this.path);
-    return null;
+    return mst;
+    // console.log(this.minSpanningTree);
   }
 
-  private updateNextEdges(vertexId: number, path: Path) {
+  private updateNextEdges(
+    vertexId: number,
+    nextEdges: Edge[],
+    mst: Edge[]
+  ): Edge[] {
     for (let edge of this.edges) {
       if (
-        !path.contains(edge) &&
-        !this.nextEdges.includes(edge) &&
+        !nextEdges.includes(edge) &&
         edge.contains(vertexId) &&
-        !edge.other(vertexId).isExplored()
+        !edge.other(vertexId).isExplored() &&
+        !mst.find((e) => e.equals(edge))
       ) {
-        this.nextEdges.push(edge);
+        nextEdges.push(edge);
       }
     }
-    this.nextEdges.sort((e1, e2) => e2.distance - e1.distance);
-    // console.log(JSON.stringify(this.nextEdges, null, 2));
+    return nextEdges.sort((e1, e2) => e2.distance - e1.distance);
   }
 }

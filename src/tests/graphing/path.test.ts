@@ -46,6 +46,15 @@ describe("Path test suite", () => {
 
     expect(path.contains(testEdges.e1)).toBeFalsy();
   });
+
+  test("should contain vertex", () => {
+    const path = new Path();
+
+    path.addEdge(testEdges.e1);
+
+    expect(path.containsVertex(testVerticies.v1.id)).toBeTruthy();
+    expect(path.containsVertex(testVerticies.v2.id)).toBeTruthy();
+  });
 });
 
 export {};

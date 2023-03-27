@@ -13,8 +13,8 @@ describe("Prims algorithm test suite", () => {
 
     const path = graph.findPath(vertex.id, vertex.id);
 
-    expect(path?.length).toEqual(0);
-    expect(path?.getEdges()).toContainEqual(expectedEdge);
+    expect(vertex.distance).toEqual(0);
+    expect(path.length).toEqual(0);
   });
 
   test("should find path 1 edge away", () => {
@@ -26,10 +26,9 @@ describe("Prims algorithm test suite", () => {
 
     const path = graph.findPath(vertexJ.id, vertexK.id);
     // console.log(JSON.stringify(path, null, 2));
-    // expect(path?.length).toEqual(5);
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(5);
-    // expect(graph.exploreOrder).toEqual([vertexJ.id, vertexK.id]);
+    expect(path.length).toEqual(5);
   });
 
   test("should find path 2 edges away", () => {
@@ -44,11 +43,10 @@ describe("Prims algorithm test suite", () => {
 
     const path = graph.findPath(vertexJ.id, vertexL.id);
 
-    // expect(path?.length).toEqual(10);
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(5);
     expect(vertexLOnGraph.distance).toEqual(10);
-    // expect(graph.exploreOrder).toEqual(expectedOrder);
+    expect(path.length).toEqual(10);
   });
 
   test("should find path 3 edges away", () => {
@@ -64,11 +62,11 @@ describe("Prims algorithm test suite", () => {
 
     const path = graph.findPath(vertexJ.id, vertexM.id);
 
-    // expect(path?.length).toEqual(15);
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(5);
     expect(vertexLOnGraph.distance).toEqual(10);
     expect(vertexMOnGraph.distance).toEqual(15);
+    expect(path.length).toEqual(15);
   });
 
   test("should find path using shortest edges", () => {
@@ -85,11 +83,13 @@ describe("Prims algorithm test suite", () => {
 
     const path = graph.findPath(vertexJ.id, vertexM.id);
 
-    // expect(path?.length).toEqual(3);
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(1);
     expect(vertexLOnGraph.distance).toEqual(2);
     expect(vertexMOnGraph.distance).toEqual(3);
+    expect(path.length).toEqual(3);
+    expect(path.containsVertex(vertexK.id)).toBeTruthy();
+    expect(path.containsVertex(vertexL.id)).toBeTruthy();
   });
 
   test("should find path using barely shortest edges first", () => {
@@ -101,16 +101,21 @@ describe("Prims algorithm test suite", () => {
     const vertexMOnGraph = graph.addVertex(vertexM.position);
     graph.addEdge(vertexJ.id, vertexK.id, 4);
     graph.addEdge(vertexK.id, vertexL.id, 4);
-    graph.addEdge(vertexL.id, vertexM.id, 4);
-    graph.addEdge(vertexJ.id, vertexM.id, 12);
+    const shouldContainEdge = graph.addEdge(vertexL.id, vertexM.id, 4);
+    const shouldNotContainEdge = graph.addEdge(vertexJ.id, vertexM.id, 12);
 
     const path = graph.findPath(vertexJ.id, vertexM.id);
 
-    // expect(path?.length).toEqual(12);
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(4);
     expect(vertexLOnGraph.distance).toEqual(8);
     expect(vertexMOnGraph.distance).toEqual(12);
+    expect(path.length).toEqual(12);
+    expect(path.containsVertex(vertexJ.id)).toBeTruthy();
+    expect(path.containsVertex(vertexK.id)).toBeTruthy();
+    expect(path.containsVertex(vertexL.id)).toBeTruthy();
+    expect(path.contains(shouldContainEdge)).toBeTruthy();
+    expect(path.contains(shouldNotContainEdge)).toBeFalsy();
   });
 
   test("should find path using shorter edge than other path", () => {
@@ -126,13 +131,16 @@ describe("Prims algorithm test suite", () => {
     graph.addEdge(vertexJ.id, vertexM.id, 5);
 
     const path = graph.findPath(vertexJ.id, vertexM.id);
-    console.log(JSON.stringify(path?.edges, null, 2));
 
     expect(vertexJOnGraph.distance).toEqual(0);
     expect(vertexKOnGraph.distance).toEqual(1);
     expect(vertexLOnGraph.distance).toEqual(2);
     expect(vertexMOnGraph.distance).toEqual(5);
-    expect(path?.length).toEqual(5);
+    expect(path.length).toEqual(5);
+    expect(path.containsVertex(vertexJ.id)).toBeTruthy();
+    expect(path.containsVertex(vertexM.id)).toBeTruthy();
+    expect(path.containsVertex(vertexK.id)).toBeFalsy();
+    expect(path.containsVertex(vertexL.id)).toBeFalsy();
   });
 });
 

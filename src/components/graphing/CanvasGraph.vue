@@ -144,6 +144,7 @@ export default defineComponent({
     findPath() {
       this.errors = [];
       this.selectedPoint = null;
+      this.graph.clearPath();
       const ctx = this.canvasContext;
       try {
         const path = this.graph.findPath(this.startNode, this.endNode);

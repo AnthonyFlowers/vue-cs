@@ -148,8 +148,10 @@ export default defineComponent({
       const ctx = this.canvasContext;
       try {
         const path = this.graph.findPath(this.startNode, this.endNode);
-        this.result = path;
-        this.redraw(ctx);
+        if (path) {
+          this.result = path;
+          this.redraw(ctx);
+        }
       } catch (e) {
         if (e instanceof Error) {
           this.errors = [e.message];

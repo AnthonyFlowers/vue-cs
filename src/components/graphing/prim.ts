@@ -7,43 +7,54 @@ export class Prim extends Graph {
     super();
   }
 
-  public findPath(fromVertexId: number, toVertexId: number): Path {
+  public findPath(fromVertexId: number, toVertexId: number): Path | null {
     const mst = this.generateMST(fromVertexId);
-    const path = new Path();
-    const verticies: number[] = [fromVertexId, toVertexId];
-    let edge = mst.pop();
-    while (
-      (!path.containsVertex(fromVertexId) ||
-        !path.containsVertex(toVertexId)) &&
-      edge
-    ) {
-      if (
-        verticies.some((v) => {
-          if (edge?.contains(v)) {
-            verticies.push(edge.other(v).id);
-            return true;
-          }
-        })
-      ) {
-        path.addEdge(edge);
-      }
-      edge = mst.pop();
+    if (fromVertexId === toVertexId) {
+      const vertex = this.getvertex(fromVertexId);
+      return new Path([new Edge(vertex, vertex, 0)]);
     }
-    return path;
+    return this.pathFromMST(fromVertexId, toVertexId, mst);
   }
-  public generateMST(fromVertexId: number): Edge[] {
+
+  private pathFromMST(
+    fromVertexID: number,
+    toVertexId: number,
+    mst: Edge[],
+    path = new Path(),
+    searched: Vertex[] = []
+  ): Path | null {
+    if (path.containsVertex(toVertexId)) return path;
+    const edges = mst.filter((e) => {
+      const otherVertex = e.other(fromVertexID);
+      if (e.contains(fromVertexID) && !path.contains(e)) {
+        searched.push(otherVertex);
+        return true;
+      }
+      return false;
+    });
+    for (let edge of edges) {
+      const otherVertexId = edge.other(fromVertexID).id;
+      const p = this.pathFromMST(
+        otherVertexId,
+        toVertexId,
+        mst.filter((e) => !edges.find((ed) => ed.equals(e))),
+        new Path([...path.edges, edge]),
+        searched
+      );
+      if (p) return p;
+    }
+    return null;
+  }
+
+  private generateMST(fromVertexId: number): Edge[] {
     const mst: Edge[] = [];
     let nextEdges: Edge[] = [];
     let fromVertex = this.getvertex(fromVertexId);
 
-    // const generatedPath = this.generateTree(fromVertex, toVertex, path);
     fromVertex.distance = 0;
     nextEdges = this.updateNextEdges(fromVertexId, nextEdges, mst);
     let edge = nextEdges.pop();
-    // console.log(exploreOrder);
     while (edge) {
-      // edge.other(toVertexId).distance = path.length;
-      // path.addEdge(edge);
       const nextVertex = edge.unexplored();
       if (nextVertex && !nextVertex.isExplored()) {
         fromVertex = edge.other(nextVertex.id);
@@ -54,7 +65,6 @@ export class Prim extends Graph {
       edge = nextEdges.pop();
     }
     return mst;
-    // console.log(this.minSpanningTree);
   }
 
   private updateNextEdges(

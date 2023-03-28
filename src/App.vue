@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar.vue";
 </script>
 
 <template>
-  <div>
+  <div class="content">
     <Navbar />
     <router-view></router-view>
   </div>
@@ -14,4 +14,9 @@ export default {
   components: { Navbar },
 };
 </script>
-<style scoped></style>
+<style scoped>
+.content {
+  width: 55rem;
+  margin: 0 auto;
+}
+</style>

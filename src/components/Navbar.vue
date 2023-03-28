@@ -3,20 +3,22 @@
   <ul>
     <li><router-link to="/">Home</router-link></li>
 
-    <li><router-link to="/binary-search">Binary Search</router-link></li>
     <li class="dropdown">
-      <a class="dropbtn">Graphs</a>
+      <router-link to="/search" class="dropbtn">Search</router-link>
       <div class="dropdown-content">
-        <li>
-          <router-link to="/graph/dijkstra-algo"
-            >Dijkstra's Algorithm</router-link
-          >
-          <router-link to="/graph/prim-algo">Prim's Algorithm</router-link>
-        </li>
+        <router-link to="/search/linear">Linear Search</router-link>
+        <router-link to="/search/binary">Binary Search</router-link>
       </div>
     </li>
-    <li></li>
-    <li></li>
+    <li class="dropdown">
+      <router-link to="/graph">Graphs</router-link>
+      <div class="dropdown-content">
+        <router-link to="/graph/dijkstra-algo"
+          >Dijkstra's Algorithm</router-link
+        >
+        <router-link to="/graph/prim-algo">Prim's Algorithm</router-link>
+      </div>
+    </li>
 
     <li style="float: right"><a class="active" href="#about">About</a></li>
   </ul>
@@ -36,6 +38,7 @@ ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  margin-bottom: 8px;
   overflow: hidden;
   background-color: #333;
 }

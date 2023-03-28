@@ -11,6 +11,7 @@ defineProps<{
 </script>
 <template>
   <div id="graphView">
+    <div>Graph search using {{ graph.algorithm }}</div>
     <canvas
       id="graphCanvas"
       ref="graphCanvas"
@@ -29,16 +30,15 @@ defineProps<{
       <input v-model.number="endNode" type="number" min="0" />
       <button @click="findPath">Run Algorithm</button>
     </div>
-    <div class="algo-path" v-if="result.length">
-      <div>
-        <div>Node</div>
-        <div>Distance</div>
-        <div>Node</div>
-      </div>
+    <div class="algo-path" v-if="result.getEdges().length">
+      <div>Path (edges)</div>
+      <div><i>Edge Ex: Node&lt;=&gt;Node (edge distance)</i></div>
       <div v-for="edge in result.getEdges()">
-        <div>{{ edge.vertexOne.id }}</div>
-        <div>{{ edge.distance }}</div>
-        <div>{{ edge.vertexTwo.id }}</div>
+        <div>
+          {{
+            `${edge.vertexOne.id} <=> ${edge.vertexTwo.id} (${edge.distance})`
+          }}
+        </div>
       </div>
       <div>Total Distance: {{ result.length }}</div>
     </div>
@@ -47,6 +47,9 @@ defineProps<{
 <script lang="ts">
 export default defineComponent({
   name: "CanvasGraph",
+  updated() {
+    this.redraw(this.canvasContext);
+  },
   data() {
     return {
       textVisibility: true,
@@ -73,7 +76,7 @@ export default defineComponent({
     redraw(ctx: CanvasRenderingContext2D) {
       ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       this.graph.getEdges().forEach((e: Edge) => this.drawEdge(e, ctx));
-      this.graph.getVerticies().forEach((v: Vertex) => this.drawvertex(v, ctx));
+      this.graph.getVerticies().forEach((v: Vertex) => this.drawVertex(v, ctx));
     },
     graphClick(ev: MouseEvent) {
       const ctx = this.canvasContext;
@@ -110,7 +113,7 @@ export default defineComponent({
       }
       this.selectedPoint = null;
     },
-    drawvertex(vertex: Vertex, ctx: CanvasRenderingContext2D) {
+    drawVertex(vertex: Vertex, ctx: CanvasRenderingContext2D) {
       const x = vertex.position.x;
       const y = vertex.position.y;
       ctx.beginPath();
@@ -178,7 +181,7 @@ export default defineComponent({
       }
     },
     edgeColor(edge: Edge): string {
-      if (this.result.getEdges().find((e) => e.equals(edge))) {
+      if (this.result.getEdges().find((e: Edge) => e.equals(edge))) {
         return this.drawingProperties.resultEdgeColor;
       }
       return this.drawingProperties.edgeColor;
@@ -199,7 +202,7 @@ main div {
 #graphView > * {
   margin-bottom: 8px;
 }
-#graphCanvas {
+canvas {
   border: solid 1px black;
   display: block;
 }

@@ -31,7 +31,7 @@ export abstract class Graph {
   protected verticies: Vertex[];
   protected edges: Edge[];
   protected minPointDistance: number;
-  constructor() {
+  constructor(readonly algorithm: string) {
     this.path = new Path([]);
     this.verticies = [];
     this.edges = [];

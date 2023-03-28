@@ -4,6 +4,10 @@ import { Graph, Result, Vertex } from "./graph";
 import { Path } from "./path";
 
 export class Dijkstra extends Graph {
+  constructor() {
+    super("Dijkstra's Algorithm");
+  }
+
   public findPath(
     fromvertexId: number,
     tovertexId: number,

@@ -8,6 +8,7 @@
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
     "test": "jest",
+    "test-watch": "jest --watch",
     "test-coverage": "npm run test -- --coverage"
   },
   "dependencies": {

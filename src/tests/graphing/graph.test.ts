@@ -3,6 +3,9 @@ import { Graph } from "../../components/graphing/graph";
 import { Path } from "../../components/graphing/path";
 
 class TestGraph extends Graph {
+  constructor() {
+    super("");
+  }
   findPath(fromvertexId: number, tovertexId: number): Path {
     throw new Error("Method not implemented.");
   }

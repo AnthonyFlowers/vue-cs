@@ -4,7 +4,7 @@ import { Path } from "./path";
 
 export class Prim extends Graph {
   constructor() {
-    super();
+    super("Prim's Algorithm");
   }
 
   public findPath(fromVertexId: number, toVertexId: number): Path | null {

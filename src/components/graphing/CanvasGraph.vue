@@ -21,7 +21,13 @@ defineProps<{
     ></canvas>
     <div>
       <label>Edge Length: </label>
-      <input type="number" v-model.number="edgeLength" ref="edgeLengthInput" />
+      <input
+        type="number"
+        v-model.number="edgeLength"
+        ref="edgeLengthInput"
+        @change="validateEdgeLength()"
+        min="1"
+      />
     </div>
     <div class="algorith-props">
       <label>From: </label>
@@ -185,6 +191,11 @@ export default defineComponent({
         return this.drawingProperties.resultEdgeColor;
       }
       return this.drawingProperties.edgeColor;
+    },
+    validateEdgeLength(): void {
+      if (this.edgeLength < 1) {
+        this.edgeLength = 1;
+      }
     },
   },
   computed: {

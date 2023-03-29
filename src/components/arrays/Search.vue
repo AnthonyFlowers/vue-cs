@@ -66,11 +66,6 @@ export default defineComponent({
       console.log(JSON.stringify(this.results, null, 2));
     },
   },
-  computed: {
-    getSortedValues() {
-      return this.sortedValues;
-    },
-  },
 });
 </script>
 <style scoped></style>

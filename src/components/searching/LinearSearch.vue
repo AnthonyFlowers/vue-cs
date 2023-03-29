@@ -6,14 +6,27 @@ import { Result, LinearSearch, SentinelLinearSearch } from "./search";
   <div>
     <p>Finding a value in an array using a linear search</p>
     <div>
-      <label for="arrayInput">Enter a list of comma separated values: </label>
-      <input
-        :value="value"
-        name="arrayInput"
-        @input="(event: Event) => (value = (<HTMLInputElement>event.target).value)"
-      />
-      <p>{{ value }}</p>
+      <div>
+        <label for="arrayInput">Enter a list of comma separated values: </label>
+        <input
+          :value="value"
+          name="arrayInput"
+          @input="(event: Event) => (value = (<HTMLInputElement>event.target).value)"
+        />
+      </div>
+      <div>
+        <label for="searchTerm">Search Term: </label>
+        <input
+          name="searchTerm"
+          :value="searchValue"
+          @input="(event: Event) => searchValue = (<HTMLInputElement>event.target).value"
+        />
+      </div>
       <button @click="search">Search</button>
+      <div v-for="result of <Result[]>this.results">
+        <p>{{ result.algorithm }} (found: {{ result.found }})</p>
+        <p>{{ result.searchPath.join(" => ") }}</p>
+      </div>
     </div>
   </div>
 </template>
@@ -23,14 +36,19 @@ export default defineComponent({
   data() {
     return {
       value: "",
+      searchValue: "",
       results: [] as Result[],
     };
   },
   methods: {
     search() {
-      const valueList = this.value.split(",");
-      this.results.push(LinearSearch.search([...valueList], "a"));
-      this.results.push(SentinelLinearSearch.search([...valueList], "a"));
+      this.results.length = 0;
+      let valueList = [] as string[];
+      if (this.value !== "") valueList = this.value.split(",");
+      this.results.push(LinearSearch.search(valueList, this.searchValue));
+      this.results.push(
+        SentinelLinearSearch.search(valueList, this.searchValue)
+      );
       console.log(JSON.stringify(this.results, null, 2));
     },
   },

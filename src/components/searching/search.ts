@@ -1,4 +1,5 @@
 export interface Result {
+  algorithm: string;
   searchValue: string;
   searchPath: string[];
   found: boolean;
@@ -11,6 +12,7 @@ abstract class Search {
 export class LinearSearch extends Search {
   static search(values: string[], searchValue: string): Result {
     const result = {
+      algorithm: "Linear",
       found: false,
       searchPath: [] as string[],
       searchValue,
@@ -29,6 +31,7 @@ export class LinearSearch extends Search {
 export class SentinelLinearSearch extends Search {
   static search(values: string[], searchValue: string): Result {
     const result = {
+      algorithm: "Sentinel",
       found: false,
       searchPath: [] as string[],
       searchValue,

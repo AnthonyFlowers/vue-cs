@@ -65,7 +65,7 @@ export class BinarySearch extends Search {
       searchValue,
       index: -1,
     };
-    values.sort();
+    // values.sort();
     return this.binarySearch(values, searchValue, 0, values.length - 1, result);
   }
 

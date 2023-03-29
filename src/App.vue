@@ -5,7 +5,9 @@ import Navbar from "./components/Navbar.vue";
 <template>
   <div class="content">
     <Navbar />
-    <router-view></router-view>
+    <div class="main">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -18,5 +20,8 @@ export default {
 .content {
   width: 55rem;
   margin: 0 auto;
+}
+.main {
+  margin-inline: 12px;
 }
 </style>

@@ -1,4 +1,4 @@
-import { SentinelLinearSearch } from "../../components/searching/search";
+import { SentinelLinearSearch } from "../../components/arrays/search";
 
 describe("Sentinel search test suite", () => {
   test("should not find value in 0 length array", () => {

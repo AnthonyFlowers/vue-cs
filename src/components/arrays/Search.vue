@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
-import { Result, LinearSearch, SentinelLinearSearch } from "./search";
+import {
+  Result,
+  LinearSearch,
+  SentinelLinearSearch,
+  BinarySearch,
+} from "./search";
 </script>
 <template>
   <div>
-    <p>Finding a value in an array using a linear search</p>
+    <p>Finding a value in an array using various search algorithms</p>
     <div>
       <div>
         <label for="arrayInput">Enter a list of comma separated values: </label>
@@ -25,6 +30,9 @@ import { Result, LinearSearch, SentinelLinearSearch } from "./search";
       <button @click="search">Search</button>
       <div v-for="result of <Result[]>this.results">
         <p>{{ result.algorithm }} (found: {{ result.found }})</p>
+        <p v-if="result.algorithm === 'Binary'">
+          Sorted Array: {{ this.sortedValues }}
+        </p>
         <p>{{ result.searchPath.join(" => ") }}</p>
       </div>
     </div>
@@ -36,6 +44,7 @@ export default defineComponent({
   data() {
     return {
       value: "",
+      sortedValues: [] as string[],
       searchValue: "",
       results: [] as Result[],
     };
@@ -43,11 +52,16 @@ export default defineComponent({
   methods: {
     search() {
       this.results.length = 0;
+      this.sortedValues.length = 0;
       let valueList = [] as string[];
       if (this.value !== "") valueList = this.value.split(",");
-      this.results.push(LinearSearch.search(valueList, this.searchValue));
+      this.results.push(LinearSearch.search([...valueList], this.searchValue));
       this.results.push(
-        SentinelLinearSearch.search(valueList, this.searchValue)
+        SentinelLinearSearch.search([...valueList], this.searchValue)
+      );
+      this.sortedValues = [...valueList].sort();
+      this.results.push(
+        BinarySearch.search(this.sortedValues, this.searchValue)
       );
       console.log(JSON.stringify(this.results, null, 2));
     },

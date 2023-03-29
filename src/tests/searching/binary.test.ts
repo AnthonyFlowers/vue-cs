@@ -1,4 +1,4 @@
-import { BinarySearch } from "../../components/searching/search";
+import { BinarySearch } from "../../components/arrays/search";
 
 describe("Binary search test suite", () => {
   test("should not find value in 0 length array", () => {

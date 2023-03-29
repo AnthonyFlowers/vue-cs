@@ -4,10 +4,10 @@
     <li><router-link to="/">Home</router-link></li>
 
     <li class="dropdown">
-      <router-link to="/search" class="dropbtn">Arrays</router-link>
+      <router-link to="/arrays" class="dropbtn">Arrays</router-link>
       <div class="dropdown-content">
-        <router-link to="/search/linear">Linear Search</router-link>
-        <router-link to="/search/binary">Binary Search</router-link>
+        <router-link to="/arrays/search">Search</router-link>
+        <router-link to="/arrays/sort">Sort</router-link>
       </div>
     </li>
     <li class="dropdown">

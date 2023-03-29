@@ -1,4 +1,4 @@
-import { LinearSearch } from "../../components/searching/search";
+import { LinearSearch } from "../../components/arrays/search";
 
 describe("Linear search test suite", () => {
   test("should not find value in 0 length array ", () => {

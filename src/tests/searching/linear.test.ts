@@ -7,6 +7,7 @@ describe("Linear search test suite", () => {
     const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(false);
+    expect(result.searchPath).toStrictEqual([]);
   });
 
   test("should find value in 1 length array", () => {
@@ -15,7 +16,7 @@ describe("Linear search test suite", () => {
     const result = LinearSearch.search(values, "a");
 
     expect(result.found).toEqual(true);
-    expect(result.searchPath).toContainEqual("a");
+    expect(result.searchPath).toStrictEqual(["a"]);
   });
 
   test("should not find value in 1 length array ", () => {
@@ -24,7 +25,7 @@ describe("Linear search test suite", () => {
     const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(false);
-    expect(result.searchPath).toContainEqual("a");
+    expect(result.searchPath).toStrictEqual(["a"]);
   });
 
   test("should find value in 5 length array ", () => {
@@ -33,11 +34,10 @@ describe("Linear search test suite", () => {
     const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(true);
-    expect(result.searchPath).toContainEqual("a");
-    expect(result.searchPath).toContainEqual("b");
     expect(result.searchPath).not.toContainEqual("c");
     expect(result.searchPath).not.toContainEqual("d");
     expect(result.searchPath).not.toContainEqual("e");
+    expect(result.searchPath).toStrictEqual(["a", "b"]);
   });
 
   test("should find value in 5 length array ", () => {
@@ -46,11 +46,8 @@ describe("Linear search test suite", () => {
     const result = LinearSearch.search(values, "1");
 
     expect(result.found).toEqual(false);
-    expect(result.searchPath).toContainEqual("a");
-    expect(result.searchPath).toContainEqual("b");
-    expect(result.searchPath).toContainEqual("c");
-    expect(result.searchPath).toContainEqual("d");
-    expect(result.searchPath).toContainEqual("e");
+    expect(result.searchPath).not.toContainEqual("1");
+    expect(result.searchPath).toStrictEqual(["a", "b", "c", "d", "e"]);
   });
 });
 

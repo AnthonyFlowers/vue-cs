@@ -3,18 +3,16 @@ import { LinearSearch } from "../../components/searching/search";
 describe("Linear search test suite", () => {
   test("should not find value in 0 length array ", () => {
     const values = [] as string[];
-    const search = new LinearSearch(values);
 
-    const result = search.search("b");
+    const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(false);
   });
 
   test("should find value in 1 length array", () => {
     const values = ["a"];
-    const search = new LinearSearch(values);
 
-    const result = search.search("a");
+    const result = LinearSearch.search(values, "a");
 
     expect(result.found).toEqual(true);
     expect(result.searchPath).toContainEqual("a");
@@ -22,9 +20,8 @@ describe("Linear search test suite", () => {
 
   test("should not find value in 1 length array ", () => {
     const values = ["a"];
-    const search = new LinearSearch(values);
 
-    const result = search.search("b");
+    const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toContainEqual("a");
@@ -32,9 +29,8 @@ describe("Linear search test suite", () => {
 
   test("should find value in 5 length array ", () => {
     const values = ["a", "b", "c", "d", "e"];
-    const search = new LinearSearch(values);
 
-    const result = search.search("b");
+    const result = LinearSearch.search(values, "b");
 
     expect(result.found).toEqual(true);
     expect(result.searchPath).toContainEqual("a");
@@ -46,9 +42,8 @@ describe("Linear search test suite", () => {
 
   test("should find value in 5 length array ", () => {
     const values = ["a", "b", "c", "d", "e"];
-    const search = new LinearSearch(values);
 
-    const result = search.search("1");
+    const result = LinearSearch.search(values, "1");
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toContainEqual("a");

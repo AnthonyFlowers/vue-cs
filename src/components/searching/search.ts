@@ -5,19 +5,17 @@ export interface Result {
 }
 
 abstract class Search {
-  constructor(protected values: string[]) {}
-
-  abstract search(searchValue: string): Result;
+  static search: (values: string[], searchValue: string) => Result;
 }
 
 export class LinearSearch extends Search {
-  search(searchValue: string): Result {
+  static search(values: string[], searchValue: string): Result {
     const result = {
       found: false,
       searchPath: [] as string[],
       searchValue,
     };
-    for (const value of this.values) {
+    for (const value of values) {
       result.searchPath.push(value);
       if (value === searchValue) {
         result.found = true;
@@ -29,18 +27,18 @@ export class LinearSearch extends Search {
 }
 
 export class SentinelLinearSearch extends Search {
-  search(searchValue: string): Result {
+  static search(values: string[], searchValue: string): Result {
     const result = {
       found: false,
       searchPath: [] as string[],
       searchValue,
     };
-    const n = this.values.length;
-    this.values.push(searchValue);
+    const n = values.length;
+    values.push(searchValue);
     let i = 0;
-    result.searchPath.push(this.values[0]);
-    while (searchValue !== this.values[i]) {
-      result.searchPath.push(this.values[i]);
+    result.searchPath.push(values[0]);
+    while (searchValue !== values[i]) {
+      result.searchPath.push(values[i]);
       i++;
     }
     if (i < n) {

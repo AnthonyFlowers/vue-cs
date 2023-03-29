@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
-import { Result, LinearSearch } from "./search";
+import { Result, LinearSearch, SentinelLinearSearch } from "./search";
+defineProps<{
+  algorithm: LinearSearch | SentinelLinearSearch;
+}>();
 </script>
 <template>
   <div>
@@ -31,7 +34,9 @@ export default defineComponent({
     updateValues() {
       this.values = (<HTMLInputElement>this.$refs.arrayInput).value.split(",");
     },
-    search() {},
+    search() {
+      this.result = this.algorithm.search();
+    },
   },
 });
 </script>

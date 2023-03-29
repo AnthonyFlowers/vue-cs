@@ -1,10 +1,10 @@
-import { SentinelLinearSearch } from "../../components/searching/search";
+import { BinarySearch } from "../../components/searching/search";
 
-describe("Sentinel search test suite", () => {
+describe("Binary search test suite", () => {
   test("should not find value in 0 length array", () => {
     const values = [] as string[];
 
-    const result = SentinelLinearSearch.search(values, "b");
+    const result = BinarySearch.search(values, "b");
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toStrictEqual([]);
@@ -13,7 +13,7 @@ describe("Sentinel search test suite", () => {
   test("should find value in 1 length array", () => {
     const values = ["a"];
 
-    const result = SentinelLinearSearch.search(values, "a");
+    const result = BinarySearch.search(values, "a");
 
     expect(result.found).toEqual(true);
     expect(result.searchPath).toStrictEqual(["a"]);
@@ -23,7 +23,7 @@ describe("Sentinel search test suite", () => {
   test("should not find value in 1 length array", () => {
     const values = ["a"];
 
-    const result = SentinelLinearSearch.search(values, "b");
+    const result = BinarySearch.search(values, "b");
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toStrictEqual(["a"]);
@@ -31,46 +31,45 @@ describe("Sentinel search test suite", () => {
   });
 
   test("should find value in 5 length array", () => {
-    const values = ["a", "1", "3", "b", "d"];
+    const values = ["1", "3", "a", "b", "d"];
 
-    const result = SentinelLinearSearch.search(values, "b");
+    const result = BinarySearch.search(values, "b");
 
     expect(result.found).toEqual(true);
-    expect(result.searchPath).toStrictEqual(["a", "1", "3", "b"]);
+    expect(result.searchPath).not.toContainEqual("1");
+    expect(result.searchPath).not.toContainEqual("3");
     expect(result.searchPath).not.toContainEqual("d");
+    expect(result.searchPath).toStrictEqual(["a", "b"]);
     expect(result.index).toBe(3);
   });
 
   test("should not find value in 5 length array", () => {
-    const values = ["a", "1", "3", "b", "d"];
+    const values = ["1", "3", "a", "b", "d"];
 
-    const result = SentinelLinearSearch.search(values, "z");
+    const result = BinarySearch.search(values, "z");
 
     expect(result.found).toEqual(false);
-    expect(result.searchPath).toStrictEqual(["a", "1", "3", "b", "d"]);
-    expect(result.searchPath).not.toContainEqual("z");
+    expect(result.searchPath).toStrictEqual(["a", "b", "d"]);
     expect(result.index).toBe(-1);
   });
 
   test("should find value in 3 length array", () => {
-    const values = ["3", "a", "5"];
+    const values = ["3", "5", "a"];
 
-    const result = SentinelLinearSearch.search(values, "a");
+    const result = BinarySearch.search(values, "a");
 
     expect(result.found).toEqual(true);
-    expect(result.searchPath).toStrictEqual(["3", "a"]);
-    expect(result.index).toBe(1);
+    expect(result.searchPath).toStrictEqual(["5", "a"]);
+    expect(result.index).toBe(2);
   });
 
   test("should not find value in 3 length array", () => {
-    const values = ["3", "a", "5"];
+    const values = ["3", "5", "a"];
 
-    const result = SentinelLinearSearch.search(values, "2");
+    const result = BinarySearch.search(values, "1");
 
     expect(result.found).toEqual(false);
-    expect(result.searchPath).toStrictEqual(["3", "a", "5"]);
+    expect(result.searchPath).toStrictEqual(["5", "3"]);
     expect(result.index).toBe(-1);
   });
 });
-
-export {};

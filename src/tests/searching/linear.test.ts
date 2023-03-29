@@ -8,6 +8,7 @@ describe("Linear search test suite", () => {
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toStrictEqual([]);
+    expect(result.index).toBe(-1);
   });
 
   test("should find value in 1 length array", () => {
@@ -17,6 +18,7 @@ describe("Linear search test suite", () => {
 
     expect(result.found).toEqual(true);
     expect(result.searchPath).toStrictEqual(["a"]);
+    expect(result.index).toBe(0);
   });
 
   test("should not find value in 1 length array ", () => {
@@ -26,6 +28,7 @@ describe("Linear search test suite", () => {
 
     expect(result.found).toEqual(false);
     expect(result.searchPath).toStrictEqual(["a"]);
+    expect(result.index).toBe(-1);
   });
 
   test("should find value in 5 length array ", () => {
@@ -38,6 +41,7 @@ describe("Linear search test suite", () => {
     expect(result.searchPath).not.toContainEqual("d");
     expect(result.searchPath).not.toContainEqual("e");
     expect(result.searchPath).toStrictEqual(["a", "b"]);
+    expect(result.index).toBe(1);
   });
 
   test("should find value in 5 length array ", () => {
@@ -48,6 +52,7 @@ describe("Linear search test suite", () => {
     expect(result.found).toEqual(false);
     expect(result.searchPath).not.toContainEqual("1");
     expect(result.searchPath).toStrictEqual(["a", "b", "c", "d", "e"]);
+    expect(result.index).toBe(-1);
   });
 });
 

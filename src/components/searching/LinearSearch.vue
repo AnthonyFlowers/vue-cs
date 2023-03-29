@@ -1,9 +1,6 @@
 <script setup lang="ts">
 import { defineComponent } from "vue";
 import { Result, LinearSearch, SentinelLinearSearch } from "./search";
-defineProps<{
-  algorithm: LinearSearch | SentinelLinearSearch;
-}>();
 </script>
 <template>
   <div>
@@ -11,13 +8,12 @@ defineProps<{
     <div>
       <label for="arrayInput">Enter a list of comma separated values: </label>
       <input
-        ref="arrayInput"
+        :value="value"
         name="arrayInput"
-        type="text"
-        @input="updateValues"
+        @input="(event: Event) => (value = (<HTMLInputElement>event.target).value)"
       />
-      <p>{{ values.join(",") }}</p>
-      <button @click="">Search</button>
+      <p>{{ value }}</p>
+      <button @click="search">Search</button>
     </div>
   </div>
 </template>
@@ -26,16 +22,16 @@ export default defineComponent({
   name: "LinearSearch",
   data() {
     return {
-      values: [] as string[],
-      result: {} as Result,
+      value: "",
+      results: [] as Result[],
     };
   },
   methods: {
-    updateValues() {
-      this.values = (<HTMLInputElement>this.$refs.arrayInput).value.split(",");
-    },
     search() {
-      this.result = this.algorithm.search();
+      const valueList = this.value.split(",");
+      this.results.push(LinearSearch.search([...valueList], "a"));
+      this.results.push(SentinelLinearSearch.search([...valueList], "a"));
+      console.log(JSON.stringify(this.results, null, 2));
     },
   },
 });

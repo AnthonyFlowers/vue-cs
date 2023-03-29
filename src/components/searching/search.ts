@@ -36,7 +36,6 @@ export class SentinelLinearSearch extends Search {
     const n = values.length;
     values.push(searchValue);
     let i = 0;
-    result.searchPath.push(values[0]);
     while (searchValue !== values[i]) {
       result.searchPath.push(values[i]);
       i++;

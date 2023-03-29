@@ -9,10 +9,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import { Dijkstra } from "./components/graphing/dijkstra";
 import { Prim } from "./components/graphing/prim";
 import Graph from "./components/graphing/Graph.vue";
-import {
-  LinearSearch,
-  SentinelLinearSearch,
-} from "./components/searching/search";
 
 const routes = [
   { path: "/", component: Home },
@@ -20,17 +16,10 @@ const routes = [
   {
     path: "/search/linear",
     component: LinearSearchView,
-    props: () => ({ algorithm: new LinearSearch([]) }),
-  },
-  {
-    path: "/search/sentinal-linear",
-    component: LinearSearchView,
-    props: () => ({ algorithm: new SentinelLinearSearch([]) }),
   },
   {
     path: "/search/binary",
     component: BinarySearch,
-    props: () => ({ algorithm: new LinearSearch([]) }),
   },
   { path: "/graph", component: Graph },
   {

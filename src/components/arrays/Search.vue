@@ -28,10 +28,10 @@ import {
         />
       </div>
       <button @click="search">Search</button>
-      <div v-for="result of <Result[]>this.results">
+      <div v-for="result in results">
         <p>{{ result.algorithm }} (found: {{ result.found }})</p>
         <p v-if="result.algorithm === 'Binary'">
-          Sorted Array: {{ this.sortedValues }}
+          Sorted Array: {{ sortedValues }}
         </p>
         <p>{{ result.searchPath.join(" => ") }}</p>
       </div>
@@ -64,6 +64,11 @@ export default defineComponent({
         BinarySearch.search(this.sortedValues, this.searchValue)
       );
       console.log(JSON.stringify(this.results, null, 2));
+    },
+  },
+  computed: {
+    getSortedValues() {
+      return this.sortedValues;
     },
   },
 });

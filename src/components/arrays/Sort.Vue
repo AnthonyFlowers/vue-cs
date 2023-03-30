@@ -9,7 +9,7 @@ import { defineComponent } from "vue";
 </template>
 <script lang="ts">
 export default defineComponent({
-  name: "Sort",
+  name: "Sorting",
 });
 </script>
 <style scoped></style>

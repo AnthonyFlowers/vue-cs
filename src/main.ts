@@ -4,7 +4,7 @@ import Home from "./components/Home.vue";
 import CanvasGraph from "./components/graphing/CanvasGraph.vue";
 import ArraySearch from "./components/arrays/Search.vue";
 import Arrays from "./components/arrays/Arrays.vue";
-import Sort from "./components/arrays/Sort.vue";
+import Sorting from "./components/arrays/Sort.vue";
 import { createRouter, createWebHistory } from "vue-router";
 import { Dijkstra } from "./components/graphing/dijkstra";
 import { Prim } from "./components/graphing/prim";
@@ -19,7 +19,7 @@ const routes = [
   },
   {
     path: "/arrays/sort",
-    component: Sort,
+    component: Sorting,
   },
   { path: "/graph", component: Graph },
   {
